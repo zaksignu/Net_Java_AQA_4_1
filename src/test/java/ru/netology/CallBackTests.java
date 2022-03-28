@@ -6,8 +6,11 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+
+import java.time.Duration;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
@@ -39,10 +42,12 @@ public class CallBackTests {
     void shouldSubmit(){
         open("http://localhost:9999");
         $("[data-test-id=\"city\"] .input__control").setValue("Петрозаводск");
-  //      $("[data-test-id=\"date\"] .input__control").click();
+              $("[data-test-id=\"date\"] .input__control").doubleClick();
+     //  $("[data-test-id=\"date\"] .input__control").sendKeys(Keys.chord(Keys.SHIFT,Keys.HOME),Keys.BACK_SPACE);
 
-        $("[data-test-id=\"date\"] .input__control").clear();
-        $("[data-test-id=\"date\"] .input__control").setValue("01.04.2022");
+    //    $("[data-test-id=\"date\"] .input__control").clear();
+    //    $("[data-test-id=\"date\"] .input__control").setValue("01.04.2022");
+  //      $("[data-test-id=\"date\"] .input__control").click();
   //      $("[data-test-id=\"date\"] .input__control").click();
         $("[data-test-id=\"name\"] .input__control").setValue("Пупкин Василий");
         $("[data-test-id=\"phone\"] .input__control").setValue("+79123456789");
@@ -50,7 +55,7 @@ public class CallBackTests {
 //        $(".form-field .button__content").click();
 //        $(".form-field .button__content").wait();
 
-        $("[data-test-id=\"notification\"] .notification__title").shouldHave(Condition.matchText("Успешно"));
+        $("[data-test-id=\"notification\"] .notification__title").should(Condition.visible, Duration.ofSeconds(15));
 
         //    $("[data-test-id=\"notification\"] .notification__title").shouldHave("")getText()
      //   data-test-id="notification"
