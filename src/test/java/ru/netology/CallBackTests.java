@@ -19,12 +19,13 @@ import static com.codeborne.selenide.Selenide.*;
 
 public class CallBackTests {
     private WebDriver driver;
+    static LocalDate date = LocalDate.now();
+    static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
     @BeforeAll
     public static void firstSetUp() {
         WebDriverManager.chromedriver().setup();
     }
-
 
     @BeforeEach
     public void setUP() {
@@ -33,6 +34,7 @@ public class CallBackTests {
         options.addArguments("--no-sandbox");
         options.addArguments("--headless");
         driver = new ChromeDriver(options);
+        open("http://localhost:9999");
     }
 
     @AfterEach
@@ -41,11 +43,9 @@ public class CallBackTests {
         driver = null;
 
     }
+
     @Test
-    void shouldWorkHappyPAth(){
-        open("http://localhost:9999");
-        LocalDate date = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+    public void shouldWorkHappyPAth() {
         $("[data-test-id=\"city\"] .input__control").setValue("Петрозаводск");
         $("[data-test-id=\"date\"] .input__control").doubleClick().sendKeys(date.plusDays(5).format(formatter));
         $("[data-test-id=\"name\"] .input__control").setValue("Пупкин Василий");
@@ -56,16 +56,16 @@ public class CallBackTests {
     }
 
     @Test
-    void shouldWorkDropDownCity(){
-        open("http://localhost:9999");
+    public void shouldWorkDropDownCity() {
         $("[data-test-id=\"city\"] .input__control").setValue("ро");
         $$(".menu-item .menu-item__control").filter(Condition.visible).first().click();
+        $("[data-test-id=\"city\"] .input__control").shouldHave(Condition.value("Белгород"));
     }
 
     @Test
-    void shouldWorkCalendarChoose(){
-        open("http://localhost:9999");
-        $("[data-test-id=\"date\"] .input__control").click();
-        $("[data-test-id=\"date\"] .input__control").sendKeys(Keys.ARROW_DOWN,Keys.ARROW_DOWN,Keys.ENTER);
+    public void shouldWorkCalendarChoose() {
+        $("[data-test-id=\"date\"] .input__control").doubleClick().sendKeys(date.plusDays(7).format(formatter));
+        $("[data-test-id=\"city\"] .input__control").click();
+        $("[data-test-id=\"date\"] .input__control").shouldHave(Condition.value(date.plusDays(7).format(formatter)), Duration.ofSeconds(1));
     }
 }
