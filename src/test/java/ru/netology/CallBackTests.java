@@ -9,11 +9,14 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.time.Duration;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.*;
+
 public class CallBackTests {
     private WebDriver driver;
 
@@ -22,14 +25,14 @@ public class CallBackTests {
         WebDriverManager.chromedriver().setup();
     }
 
+
     @BeforeEach
     public void setUP() {
-//        ChromeOptions options = new ChromeOptions();
-//        options.addArguments("--disable-dev-shm-usage");
-//        options.addArguments("--no-sandbox");
-//        options.addArguments("--headless");
-//        driver = new ChromeDriver(options);
-        driver = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--headless");
+        driver = new ChromeDriver(options);
     }
 
     @AfterEach
@@ -39,28 +42,30 @@ public class CallBackTests {
 
     }
     @Test
-    void shouldSubmit(){
+    void shouldWorkHappyPAth(){
         open("http://localhost:9999");
+        LocalDate date = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         $("[data-test-id=\"city\"] .input__control").setValue("Петрозаводск");
-              $("[data-test-id=\"date\"] .input__control").doubleClick();
-     //  $("[data-test-id=\"date\"] .input__control").sendKeys(Keys.chord(Keys.SHIFT,Keys.HOME),Keys.BACK_SPACE);
-
-    //    $("[data-test-id=\"date\"] .input__control").clear();
-    //    $("[data-test-id=\"date\"] .input__control").setValue("01.04.2022");
-  //      $("[data-test-id=\"date\"] .input__control").click();
-  //      $("[data-test-id=\"date\"] .input__control").click();
+        $("[data-test-id=\"date\"] .input__control").doubleClick().sendKeys(date.plusDays(5).format(formatter));
         $("[data-test-id=\"name\"] .input__control").setValue("Пупкин Василий");
         $("[data-test-id=\"phone\"] .input__control").setValue("+79123456789");
         $("[data-test-id=\"agreement\"] .checkbox__box").click();
-//        $(".form-field .button__content").click();
-//        $(".form-field .button__content").wait();
-
+        $(".form-field .button__content").click();
         $("[data-test-id=\"notification\"] .notification__title").should(Condition.visible, Duration.ofSeconds(15));
+    }
 
-        //    $("[data-test-id=\"notification\"] .notification__title").shouldHave("")getText()
-     //   data-test-id="notification"
-  //      $("[data-test-id=\"city\"] .input__control").click();
+    @Test
+    void shouldWorkDropDownCity(){
+        open("http://localhost:9999");
+        $("[data-test-id=\"city\"] .input__control").setValue("ро");
+        $$(".menu-item .menu-item__control").filter(Condition.visible).first().click();
+    }
 
-        System.out.println();
+    @Test
+    void shouldWorkCalendarChoose(){
+        open("http://localhost:9999");
+        $("[data-test-id=\"date\"] .input__control").click();
+        $("[data-test-id=\"date\"] .input__control").sendKeys(Keys.ARROW_DOWN,Keys.ARROW_DOWN,Keys.ENTER);
     }
 }
