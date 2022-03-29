@@ -13,8 +13,8 @@ import static com.codeborne.selenide.Selenide.*;
 
 public class CallBackTests {
 
-    String planningDate = generateDate(3);
-    String secondPlanningDate = generateDate(30);
+
+
 
     String generateDate(int days) {
         return LocalDate.now().plusDays(days).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
@@ -27,6 +27,7 @@ public class CallBackTests {
 
     @Test
     public void shouldWorkHappyPAth() {
+        String planningDate = generateDate(3);
         $("[data-test-id=\"city\"] .input__control").setValue("Петрозаводск");
         $("[data-test-id=\"date\"] .input__control").doubleClick().sendKeys(planningDate);
         $("[data-test-id=\"name\"] .input__control").setValue("Пупкин Василий");
@@ -46,6 +47,7 @@ public class CallBackTests {
 
     @Test
     public void shouldWorkCalendarChoose() {
+        String secondPlanningDate = generateDate(30);
         $("[data-test-id=\"city\"] .input__control").setValue("Петрозаводск");
         $("[data-test-id=\"date\"] .input__control").doubleClick().sendKeys(secondPlanningDate);
         $("[data-test-id=\"name\"] .input__control").setValue("Пупкин Василий");
