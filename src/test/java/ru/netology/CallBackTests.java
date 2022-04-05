@@ -82,10 +82,10 @@ public class CallBackTests {
         $(parameterString).click();
         $("[data-test-id=\"date\"] .input__control").shouldHave(Condition.value(secondPlanningDate));
 
-        $("[data-test-id=\"phone\"] .input__control").setValue("+79123456789");
-        $("[data-test-id=\"agreement\"] .checkbox__box").click();
-        $(".form-field .button__content").click();
-        $("[class='notification__content']").shouldHave(Condition.text("Встреча успешно забронирована на " + secondPlanningDate), Duration.ofSeconds(15));
+//        $("[data-test-id=\"phone\"] .input__control").setValue("+79123456789");
+//        $("[data-test-id=\"agreement\"] .checkbox__box").click();
+//        $(".form-field .button__content").click();
+//        $("[class='notification__content']").shouldHave(Condition.text("Встреча успешно забронирована на " + secondPlanningDate), Duration.ofSeconds(15));
 
     }
 }
