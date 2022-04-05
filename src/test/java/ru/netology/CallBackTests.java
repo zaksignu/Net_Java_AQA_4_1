@@ -8,14 +8,13 @@ import org.junit.jupiter.api.Test;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 
-
 import static com.codeborne.selenide.Selenide.*;
 
 public class CallBackTests {
-//
-//    int newDate = 40;
-//    String secondPlanningDate = generateDate(newDate);
-//    String parameterString = GeneratetSearchString (newDate);
+
+    int newDate = 40;
+    String secondPlanningDate = generateDate(newDate);
+    String parameterString = GeneratetSearchString (newDate);
     String planningDate = generateDate(3);
 
     String generateDate(int days) {
@@ -53,28 +52,25 @@ public class CallBackTests {
         $("[class='notification__content']").shouldHave(Condition.text("Встреча успешно забронирована на " + planningDate), Duration.ofSeconds(15));
     }
 
-//    @Test
-//    public void shouldWorkDropDownCity() {
-//        $("[data-test-id=\"city\"] .input__control").setValue("горо");
-//
-//        $$(".menu-item .menu-item__control").first().shouldHave(Condition.text("Белгород"));
-//        $$(".menu-item .menu-item__control").filter(Condition.visible).first().click();
-//        $("[data-test-id=\"city\"] .input__control").shouldHave(Condition.value("Белгород"));
-//        $("[data-test-id=\"date\"] .input__control").doubleClick().sendKeys(planningDate);
-//        $("[data-test-id=\"name\"] .input__control").setValue("Пупкин Василий");
-//        $("[data-test-id=\"phone\"] .input__control").setValue("+79123456789");
-//        $("[data-test-id=\"agreement\"] .checkbox__box").click();
-//        $(".form-field .button__content").click();
-//        $("[data-test-id=\"notification\"] .notification__title").should(Condition.visible, Duration.ofSeconds(15));
-//        $("[class='notification__content']").shouldHave(Condition.text("Встреча успешно забронирована на " + planningDate), Duration.ofSeconds(15));
-//    }
+    @Test
+    public void shouldWorkDropDownCity() {
+        $("[data-test-id=\"city\"] .input__control").setValue("горо");
+
+        $$(".menu-item .menu-item__control").first().shouldHave(Condition.text("Белгород"));
+        $$(".menu-item .menu-item__control").filter(Condition.visible).first().click();
+        $("[data-test-id=\"city\"] .input__control").shouldHave(Condition.value("Белгород"));
+        $("[data-test-id=\"date\"] .input__control").doubleClick().sendKeys(planningDate);
+        $("[data-test-id=\"name\"] .input__control").setValue("Пупкин Василий");
+        $("[data-test-id=\"phone\"] .input__control").setValue("+79123456789");
+        $("[data-test-id=\"agreement\"] .checkbox__box").click();
+        $(".form-field .button__content").click();
+        $("[data-test-id=\"notification\"] .notification__title").should(Condition.visible, Duration.ofSeconds(15));
+        $("[class='notification__content']").shouldHave(Condition.text("Встреча успешно забронирована на " + planningDate), Duration.ofSeconds(15));
+    }
 
     @Test
     public void shouldWorkCalendarChoose() {
 
-    int newDate = 40;
-    String secondPlanningDate = generateDate(newDate);
-   String parameterString = GeneratetSearchString (newDate);
         $("[data-test-id=\"city\"] .input__control").setValue("Петрозаводск");
         $("[data-test-id=\"name\"] .input__control").setValue("Пупкин Василий");
 
@@ -85,10 +81,10 @@ public class CallBackTests {
         $(parameterString).click();
         $("[data-test-id=\"date\"] .input__control").shouldHave(Condition.value(secondPlanningDate));
 
-//        $("[data-test-id=\"phone\"] .input__control").setValue("+79123456789");
-//        $("[data-test-id=\"agreement\"] .checkbox__box").click();
-//        $(".form-field .button__content").click();
-//        $("[class='notification__content']").shouldHave(Condition.text("Встреча успешно забронирована на " + secondPlanningDate), Duration.ofSeconds(15));
+        $("[data-test-id=\"phone\"] .input__control").setValue("+79123456789");
+        $("[data-test-id=\"agreement\"] .checkbox__box").click();
+        $(".form-field .button__content").click();
+        $("[class='notification__content']").shouldHave(Condition.text("Встреча успешно забронирована на " + secondPlanningDate), Duration.ofSeconds(15));
 
     }
 }
