@@ -12,10 +12,10 @@ import java.time.format.DateTimeFormatter;
 import static com.codeborne.selenide.Selenide.*;
 
 public class CallBackTests {
-
-    int newDate = 40;
-    String secondPlanningDate = generateDate(newDate);
-    String parameterString = GeneratetSearchString (newDate);
+//
+//    int newDate = 40;
+//    String secondPlanningDate = generateDate(newDate);
+//    String parameterString = GeneratetSearchString (newDate);
     String planningDate = generateDate(3);
 
     String generateDate(int days) {
@@ -72,6 +72,9 @@ public class CallBackTests {
     @Test
     public void shouldWorkCalendarChoose() {
 
+    int newDate = 40;
+    String secondPlanningDate = generateDate(newDate);
+   String parameterString = GeneratetSearchString (newDate);
         $("[data-test-id=\"city\"] .input__control").setValue("Петрозаводск");
         $("[data-test-id=\"name\"] .input__control").setValue("Пупкин Василий");
 
