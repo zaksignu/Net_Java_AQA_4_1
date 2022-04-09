@@ -12,7 +12,7 @@ import static com.codeborne.selenide.Selenide.*;
 
 public class CallBackTests {
 
-    int newDate = 40;
+    int newDate = 55;
     String secondPlanningDate = generateDate(newDate);
     String parameterString = GeneratetSearchString (newDate);
     String planningDate = generateDate(3);
@@ -22,15 +22,15 @@ public class CallBackTests {
     }
 
 
-    public String GeneratetSearchString(int days){
+    public String GeneratetSearchString(long actualMillis){
 
-        LocalTime time = LocalTime.parse("00:00:00");
-        LocalDate date = LocalDate.now();
-    //    ZoneOffset zone = ZoneOffset.of("00:00");
-        ZoneOffset zone = ZoneOffset.of("+03:00");
-        long millisDate = time.toEpochSecond(date.plusDays(days),zone);
-        System.out.println(millisDate+"____");
-        String stringForReturn = ".calendar__row [data-day=\""+ Long.toString(millisDate)+"000" + "\"]";
+//        LocalTime time = LocalTime.parse("00:00:00");
+//        LocalDate date = LocalDate.now();
+//    //    ZoneOffset zone = ZoneOffset.of("00:00");
+//        ZoneOffset zone = ZoneOffset.of("+04:00");
+//        long millisDate = time.toEpochSecond(date.plusDays(days),zone);
+//        System.out.println(millisDate+"____");
+        String stringForReturn = ".calendar__row [data-day=\""+ Long.toString(actualMillis) + "\"]";
         return stringForReturn;
 
     }
@@ -75,11 +75,17 @@ public class CallBackTests {
         $("[data-test-id=\"city\"] .input__control").setValue("Петрозаводск");
         $("[data-test-id=\"name\"] .input__control").setValue("Пупкин Василий");
 
-        $("[data-test-id=\"date\"] .input__control").click();
-        while (!($(parameterString).exists())){
+        $(".input__box .icon-button__content").click();
+        //получаем время в millis из даты календаря, выбранного в автомате
+        String currentDayPlus3inMill = $(".calendar__row .calendar__day_state_current").getAttribute("data-day");
+        // высчитываем, какую дату в millis надо найти исходя из соображений, что сутки это 86400000Мс, и учитывая
+        // что currentDayPlus3inMill уже отстоит от текущей даты на 3 дня
+        final long  neededDateInMillis = Long.parseLong(currentDayPlus3inMill)+86400000L*(newDate-3);
+
+        while (!($(GeneratetSearchString(neededDateInMillis)).exists())){
             $(".calendar__title .calendar__arrow_direction_right[data-step=\"1\"]").click();
         }
-        $(parameterString).click();
+        $(GeneratetSearchString(neededDateInMillis)).click();
         $("[data-test-id=\"date\"] .input__control").shouldHave(Condition.value(secondPlanningDate));
 
         $("[data-test-id=\"phone\"] .input__control").setValue("+79123456789");
