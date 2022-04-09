@@ -14,7 +14,6 @@ public class CallBackTests {
 
     int newDate = 55;
     String secondPlanningDate = generateDate(newDate);
-    String parameterString = GeneratetSearchString (newDate);
     String planningDate = generateDate(3);
 
     String generateDate(int days) {
@@ -24,12 +23,6 @@ public class CallBackTests {
 
     public String GeneratetSearchString(long actualMillis){
 
-//        LocalTime time = LocalTime.parse("00:00:00");
-//        LocalDate date = LocalDate.now();
-//    //    ZoneOffset zone = ZoneOffset.of("00:00");
-//        ZoneOffset zone = ZoneOffset.of("+04:00");
-//        long millisDate = time.toEpochSecond(date.plusDays(days),zone);
-//        System.out.println(millisDate+"____");
         String stringForReturn = ".calendar__row [data-day=\""+ Long.toString(actualMillis) + "\"]";
         return stringForReturn;
 
