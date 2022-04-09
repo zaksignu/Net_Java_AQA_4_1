@@ -6,7 +6,7 @@ branches:
   only:
     - master  # ветка git
 init: 
-- tzutil /s "Mountain Standard Time"
+- ./tzutil /s "Mountain Standard Time"
 build: off  # будем использовать свой скрипт сборки
 #init:
 #  - tzutil /s russian standard time
